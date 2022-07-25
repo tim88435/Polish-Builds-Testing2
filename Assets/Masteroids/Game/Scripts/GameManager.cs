@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    float time;
-    float score;
+    [SerializeField] float time;
+    public static float score;
+
     public static GameObject player;
     void Start()
     {
         if (player == null)
         {
-            Debug.LogWarning("PLAYER NOT ASSINGED");
+            Debug.LogWarning("Player not assigned");
         }
         time = 0;
     }

@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class TestScript
 {
+#if UNITY_EDITOR
     // A Test behaves as an ordinary method
     [Test]
     public void TestScriptSimplePasses()
@@ -180,4 +181,5 @@ public class TestScript
         yield return null;
         Assert.IsTrue(true);
     }
+#endif
 }

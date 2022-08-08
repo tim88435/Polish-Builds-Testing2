@@ -26,7 +26,15 @@ public class Asteroid : MonoBehaviour
     }
     private void SheckIfOutOfBounds()
     {
-        if (transform.position.x >10 || transform.position.x < -10 || transform.position.y < -6)
+        if (transform.position.x > 10)
+        {
+            transform.Translate(-20, 0, 0, Space.World);
+        }
+        if (transform.position.x < -10)
+        {
+            transform.Translate(20, 0, 0, Space.World);
+        }
+        if (transform.position.y < -6)
         {
             DeleteAsteroid();
         }

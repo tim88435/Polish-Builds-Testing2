@@ -7,6 +7,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private float timeSinceLastShot;
     public List<Bullet> Bullets;
     public GameObject bulletPrefab;
+    [Range(0.005f, Mathf.Infinity)]
     [SerializeField] private float timeBetweenShots;
     [SerializeField] private float bulletSpeed;
     // Start is called before the first frame update
@@ -20,7 +21,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (GameManager.currentGameState == GameManager.GameState.Game)
         {
-            if (Input.GetButton("Jump") && (GameManager.gameTime > (timeBetweenShots + timeSinceLastShot)))
+            if ((Input.GetButton("Jump") || Input.GetKey(KeyCode.Mouse0)) && (GameManager.gameTime > (timeBetweenShots + timeSinceLastShot)))
             {
                 SpawnBullet();
                 timeSinceLastShot = GameManager.gameTime;
@@ -39,7 +40,9 @@ public class PlayerShoot : MonoBehaviour
     {
         GameObject newBulletObject = Instantiate(bulletPrefab, GameManager.player.transform.position, Quaternion.identity, transform);
         Bullet newBullet = newBulletObject.AddComponent<Bullet>();
-        newBullet.angle = Input.GetAxisRaw("Horizontal");
+        newBullet.direction = - newBullet.transform.position + Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //Debug.Log(/*-(Vector2)newBullet.transform.position + */new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height));
+        //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         newBullet.bulletSpeed = bulletSpeed;
         Bullets.Add(newBullet);
         return newBullet;

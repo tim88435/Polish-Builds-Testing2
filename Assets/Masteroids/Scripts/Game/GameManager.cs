@@ -174,16 +174,6 @@ public class GameManager : MonoBehaviour
     }
     void TestingStuff()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Debug.Log("Scrores Cleared");
-            ClearHighScores();
-        }
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.Log("Added Tim's score");
-            NewHighScore("Tim");
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseGame(!PauseCanvas.activeSelf);

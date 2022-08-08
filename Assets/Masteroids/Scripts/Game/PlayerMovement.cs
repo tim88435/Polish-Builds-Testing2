@@ -51,13 +51,13 @@ public class PlayerMovement : MonoBehaviour
     }
     private void CheckifOutOfBounds()
     {
-        if (transform.position.x < -8.5)
+        if (transform.position.x < -10)
         {
-            transform.Translate(Time.deltaTime * speed, 0, 0);
+            transform.Translate(20, 0, 0, Space.World);
         }
-        else if (transform.position.x > 8.5)
+        else if (transform.position.x > 10)
         {
-            transform.Translate(-Time.deltaTime * speed, 0, 0);
+            transform.Translate(-20, 0, 0, Space.World);
         }
         if (transform.position.y < -5)
         {

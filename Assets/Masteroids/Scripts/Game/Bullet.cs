@@ -7,16 +7,14 @@ public class Bullet : MonoBehaviour
     private List<Collider2D> collidedObjects = new List<Collider2D>();
     public CircleCollider2D circleCollider2D;
     public float angle;
+    public Vector2 direction;
     public float bulletSpeed;
     private PlayerShoot manager;
     private void Start()
     {
         manager = transform.parent.GetComponent<PlayerShoot>();
         circleCollider2D = GetComponent<CircleCollider2D>();
-        if (circleCollider2D == null)
-        {
-            Debug.Log("segnu");
-        }
+        direction.Normalize();
     }
 
     private void Update()
@@ -30,11 +28,19 @@ public class Bullet : MonoBehaviour
     }
     private void MoveBullet()
     {
-        transform.Translate(angle * Time.deltaTime * bulletSpeed, Time.deltaTime * bulletSpeed, 0, Space.World);
+        transform.Translate(direction * Time.deltaTime * bulletSpeed, Space.World);
     }
     private void SheckIfOutOfBounds()
     {
-        if (transform.position.x > 10 || transform.position.x < -10 || transform.position.y > 6)
+        if (transform.position.x > 10)
+        {
+            transform.Translate(-20, 0, 0, Space.World);
+        }
+        if (transform.position.x < -10)
+        {
+            transform.Translate(20, 0, 0, Space.World);
+        }
+        if (transform.position.y > 6)
         {
             manager.Bullets.Remove(this);
             Destroy(gameObject);

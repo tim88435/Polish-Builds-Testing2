@@ -7,10 +7,11 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] private int maxAsteroids;
     [SerializeField] public List<Asteroid> Asteroids;
     [SerializeField] private GameObject asteroidPrefab;
-    [Range(0,5)]
-    [SerializeField] private float averageTimeToSpanAsteroids;
+    [Range(0.02f,5)]
+    [SerializeField] private float timeToSpawnAsteroids;
     [Range(0, 20)]
     public int difficulty;
+    private float nextSpawnTime;
     [Header("Asteroid Spawn Ranges")]
     public float minimumSpawnXRange;
     public float maximumSpawnXRange;
@@ -20,19 +21,20 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] private float angleRandomness;
     void Start()
     {
-        StartCoroutine("RollForAsteroids");
-        averageTimeToSpanAsteroids = 3/(float)difficulty;
+        timeToSpawnAsteroids = 3/(float)difficulty;
     }
     private void Update()
     {
         if (GameManager.currentGameState == GameManager.GameState.Game)
         {
             IncreaseDifficulty();
+            RollForAsteroids();
         }
     }
     private void IncreaseDifficulty()
     {
-        averageTimeToSpanAsteroids *= 1 - (difficulty * Time.deltaTime * 0.01f);
+        timeToSpawnAsteroids *= 1 - (difficulty * Time.deltaTime * 0.01f);
+        timeToSpawnAsteroids = Mathf.Clamp(timeToSpawnAsteroids, 0.02f, Mathf.Infinity);
     }
     public Asteroid MakeAsteroid()
     {
@@ -46,24 +48,21 @@ public class AsteroidManager : MonoBehaviour
         }
         return newAsteroid;
     }
-    private IEnumerator RollForAsteroids()
+    private void RollForAsteroids()
     {
         if (GameManager.currentGameState != GameManager.GameState.Game)
         {
-            yield return new WaitForSeconds(0.1f);
+            return;
         }
-        else
+        if (Asteroids.Count > maxAsteroids)
         {
-            yield return new WaitForSeconds(Random.Range(averageTimeToSpanAsteroids * 0.8f, averageTimeToSpanAsteroids * 0.12f));
-            if (Asteroids.Count < maxAsteroids)
-            {
-                Asteroids.Add(MakeAsteroid());
-                if (Asteroids[Asteroids.Count - 1].transform.position.x < -7 && Asteroids[Asteroids.Count - 1])
-                {
-
-                }
-            }
+            return;
         }
-        StartCoroutine("RollForAsteroids");
+        while (GameManager.gameTime > nextSpawnTime)
+        {
+            Asteroids.Add(MakeAsteroid());
+            nextSpawnTime += timeToSpawnAsteroids;
+        }
+        
     }
 }

@@ -6011,7 +6011,7 @@ MonoBehaviour:
   timeSinceLastShot: 0
   Bullets: []
   bulletPrefab: {fileID: 4456801224479179352, guid: 244281b3bb13d1e4ba3c4d2d69d98e2e, type: 3}
-  timeBetweenShots: 1
+  timeBetweenShots: 0.2
   bulletSpeed: 3
 --- !u!1 &1265794559
 GameObject:

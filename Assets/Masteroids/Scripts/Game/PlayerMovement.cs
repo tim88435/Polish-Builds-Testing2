@@ -7,10 +7,12 @@ public class PlayerMovement : MonoBehaviour
     public float speed;
     [SerializeField] List<Collider2D> collidedObjects = new List<Collider2D>();
     private Collider2D playerCollider;
+    private ArcadeInput input;
     // Start is called before the first frame update
     void Start()
     {
         playerCollider = GetComponent<Collider2D>();
+        input = GetComponent<ArcadeInput>();
     }
 
     // Update is called once per frame
@@ -29,6 +31,7 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
         Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
+        //direction = new Vector3(input., 0, 0);
         transform.Translate(direction.normalized * Time.deltaTime * speed);
     }
     public void MovePlayer(Vector3 direction)

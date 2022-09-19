@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8683282584846952110}
   - component: {fileID: 2215938531850372834}
   - component: {fileID: -374627853678259776}
+  - component: {fileID: 6201203169896723583}
   m_Layer: 0
   m_Name: Player Prefab
   m_TagString: Untagged
@@ -97,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
+  collidedObjects: []
 --- !u!60 &-374627853678259776
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -130,3 +132,16 @@ PolygonCollider2D:
       - {x: 0.5, y: -0.02734375}
       - {x: 0.5, y: 0.015625}
       - {x: 0.0703125, y: 0.25}
+--- !u!114 &6201203169896723583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5321485337228152569}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c80443ebc7a7962488393d51cb2a5640, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerNum: 0

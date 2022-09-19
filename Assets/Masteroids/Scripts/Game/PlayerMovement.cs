@@ -18,7 +18,11 @@ public class PlayerMovement : MonoBehaviour
     {
         if (GameManager.currentGameState == GameManager.GameState.Game)
         {
+#if UNITY_EDITOR
             MovePlayer(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
+#else
+            MovePlayer(new Vector3(Input.GetAxisRaw("P1 Hori"), Input.GetAxisRaw("P1 Verti"), 0));
+#endif
         }
         if (CheckForCollision())
         {
@@ -28,7 +32,11 @@ public class PlayerMovement : MonoBehaviour
     }
     private void MovePlayer()
     {
+#if UNITY_EDITOR
         Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
+#else
+        Vector3 direction = new Vector3(Input.GetAxisRaw("P1 Hori"), Input.GetAxisRaw("P1 Verti"), 0);
+#endif
         transform.Translate(direction.normalized * Time.deltaTime * speed);
     }
     public void MovePlayer(Vector3 direction)

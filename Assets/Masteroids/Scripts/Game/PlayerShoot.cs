@@ -40,7 +40,11 @@ public class PlayerShoot : MonoBehaviour
     {
         GameObject newBulletObject = Instantiate(bulletPrefab, GameManager.player.transform.position, Quaternion.identity, transform);
         Bullet newBullet = newBulletObject.AddComponent<Bullet>();
+#if UNITY_EDITOR
         newBullet.direction = - newBullet.transform.position + Camera.main.ScreenToWorldPoint(Input.mousePosition);
+#else
+        newBullet.direction = new Vector2(Input.GetAxisRaw("P2 Hori"), Input.GetAxisRaw("P2 Verti"));
+#endif
         //Debug.Log(/*-(Vector2)newBullet.transform.position + */new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height));
         //Debug.Log(Camera.main.ScreenToWorldPoint(Input.mousePosition));
         newBullet.bulletSpeed = bulletSpeed;

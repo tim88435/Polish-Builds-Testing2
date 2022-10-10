@@ -385,7 +385,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &530359264
 RectTransform:
   m_ObjectHideFlags: 0
@@ -648,6 +648,7 @@ GameObject:
   - component: {fileID: 627185185}
   - component: {fileID: 627185187}
   - component: {fileID: 627185186}
+  - component: {fileID: 627185188}
   m_Layer: 5
   m_Name: Arcade New Name
   m_TagString: Untagged
@@ -713,6 +714,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 627185184}
   m_CullTransparentMesh: 1
+--- !u!114 &627185188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627185184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f851d2d10130eb14692b460a378cf8d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManagerInstance: {fileID: 589630886}
+  inputField: {fileID: 0}
 --- !u!1 &632062660
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +746,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &632062661
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6089,7 +6104,7 @@ MonoBehaviour:
   Bullets: []
   bulletPrefab: {fileID: 4456801224479179352, guid: 244281b3bb13d1e4ba3c4d2d69d98e2e, type: 3}
   timeBetweenShots: 0.2
-  bulletSpeed: 3
+  bulletSpeed: 5
 --- !u!1 &1265794559
 GameObject:
   m_ObjectHideFlags: 0
@@ -6491,7 +6506,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -6686,7 +6701,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -9.1381, y: -117.609}
+  m_AnchoredPosition: {x: 0.0000066757, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1613200720
@@ -6903,7 +6918,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1959166839
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7114,7 +7129,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2062521897
 RectTransform:
   m_ObjectHideFlags: 0

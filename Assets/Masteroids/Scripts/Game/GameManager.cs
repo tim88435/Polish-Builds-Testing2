@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Text highScoreScoreText;
     [SerializeField] private Text highScoreNameText;
     [SerializeField] private GameObject NewScoreObject;
+    private float UIWaitTime = 0;
     [System.Serializable]
     public struct HighScore
     {
@@ -67,8 +68,13 @@ public class GameManager : MonoBehaviour
     }
     void Update()
     {
+        PauseMenu();
         if (currentGameState == GameState.Game)
         {
+            if (true)
+            {
+
+            }
             gameTime += Time.deltaTime;
             if (gameTime > 12)
             {
@@ -76,7 +82,7 @@ public class GameManager : MonoBehaviour
             }
             ScoreChange(Time.deltaTime * timeScoreWorth);
         }
-        else if (currentGameState == GameState.Pause && PauseCanvas.activeInHierarchy)
+        if (currentGameState == GameState.Pause && PauseCanvas.activeInHierarchy)
         {
             UpdateText(HighScoreList);
         }
@@ -92,7 +98,6 @@ public class GameManager : MonoBehaviour
                 ChangeScene(0);
             }
         }
-        TestingStuff();
         if (CheckIfNewHighScore(0))
         {
             highScoreHUDText.enabled =true;
@@ -109,10 +114,6 @@ public class GameManager : MonoBehaviour
     {
         score += change;
         scoreText.text = $"Score: {(int)score}";
-    }
-    public void PauseGame(bool isPaused)//defunct?
-    {
-        currentGameState = isPaused ? GameState.Pause : GameState.Game;
     }
     public void ResumeGame()
     {
@@ -172,12 +173,44 @@ public class GameManager : MonoBehaviour
         scoreSave.SavedScoreList = HighScoreList;
         File.WriteAllText("HighScores.txt", Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonUtility.ToJson(scoreSave))));
     }
-    void TestingStuff()
+    void PauseMenu()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+#if UNITY_EDITOR
+        if (Input.GetKey(KeyCode.Return))
+#else
+        if (Input.GetButton("P1 Start") && Input.GetButton("P2 Start"))
+#endif
         {
-            PauseGame(!PauseCanvas.activeSelf);
-            PauseCanvas.SetActive(!PauseCanvas.activeSelf);
+            UIWaitTime += Time.deltaTime;
+            if (UIWaitTime > 2)
+            {
+                QuitGame();
+            }
+        }
+        else
+        {
+            UIWaitTime = 0;
+        }
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Return))
+#else
+        if (Input.GetButtonDown("P1 Start") || Input.GetButtonDown("P2 Start"))
+#endif
+        {
+            switch (currentGameState)
+            {
+                case GameState.Pause:
+                    currentGameState = GameState.Game;
+                    PauseCanvas.SetActive(false);
+                    break;
+                case GameState.Game:
+                    currentGameState = GameState.Pause;
+                    PauseCanvas.SetActive(true);
+                    break;
+                default:
+                    PauseCanvas.SetActive(false);
+                    break;
+            }
         }
     }
     private void UpdateText(List<HighScore> scores)

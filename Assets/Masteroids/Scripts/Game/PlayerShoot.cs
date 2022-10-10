@@ -21,7 +21,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (GameManager.currentGameState == GameManager.GameState.Game)
         {
-            if ((Input.GetButton("Jump") || Input.GetKey(KeyCode.Mouse0)) && (GameManager.gameTime > (timeBetweenShots + timeSinceLastShot)))
+            if ((Input.GetButton("Jump") || /*Input.GetKey(KeyCode.Mouse0)*/Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) && (GameManager.gameTime > (timeBetweenShots + timeSinceLastShot)))
             {
                 SpawnBullet();
                 timeSinceLastShot = GameManager.gameTime;
@@ -41,7 +41,8 @@ public class PlayerShoot : MonoBehaviour
         GameObject newBulletObject = Instantiate(bulletPrefab, GameManager.player.transform.position, Quaternion.identity, transform);
         Bullet newBullet = newBulletObject.AddComponent<Bullet>();
 #if UNITY_EDITOR
-        newBullet.direction = - newBullet.transform.position + Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        //newBullet.direction = - newBullet.transform.position + Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        newBullet.direction = new Vector2(Input.GetKey(KeyCode.RightArrow) ? 1 : Input.GetKey(KeyCode.LeftArrow) ? -1 : 0, Input.GetKey(KeyCode.UpArrow) ? 1 : Input.GetKey(KeyCode.DownArrow) ? -1 : 0);
 #else
         newBullet.direction = new Vector2(Input.GetAxisRaw("P2 Hori"), Input.GetAxisRaw("P2 Verti"));
 #endif

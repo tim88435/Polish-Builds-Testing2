@@ -19,7 +19,8 @@ public class PlayerMovement : MonoBehaviour
         if (GameManager.currentGameState == GameManager.GameState.Game)
         {
 #if UNITY_EDITOR
-            MovePlayer(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
+            //MovePlayer(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
+            MovePlayer(new Vector3(Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0, Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0, 0));
 #else
             MovePlayer(new Vector3(Input.GetAxisRaw("P1 Hori"), Input.GetAxisRaw("P1 Verti"), 0));
 #endif
@@ -33,7 +34,8 @@ public class PlayerMovement : MonoBehaviour
     private void MovePlayer()
     {
 #if UNITY_EDITOR
-        Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
+        //Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
+        Vector3 direction = new Vector3(Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0, Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0, 0);
 #else
         Vector3 direction = new Vector3(Input.GetAxisRaw("P1 Hori"), Input.GetAxisRaw("P1 Verti"), 0);
 #endif
@@ -49,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             for (int i = 0; i < collidedObjects.Count; i++)
             {
-                if (collidedObjects[i].TryGetComponent<Asteroid>(out Asteroid asteroid))
+                if (collidedObjects[i].TryGetComponent(out Asteroid _))
                 {
                     return true;
                 }

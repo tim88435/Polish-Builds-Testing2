@@ -5,7 +5,8 @@ using UnityEngine;
 public class AsteroidManager : MonoBehaviour
 {
     [SerializeField] private int maxAsteroids;
-    [SerializeField] public List<Asteroid> Asteroids;
+    public int asteroidCount = 0;
+    //[SerializeField] public List<Asteroid> Asteroids;
     [SerializeField] private GameObject asteroidPrefab;
     [Range(0.02f,5)]
     [SerializeField] private float timeToSpawnAsteroids;
@@ -54,13 +55,14 @@ public class AsteroidManager : MonoBehaviour
         {
             return;
         }
-        if (Asteroids.Count > maxAsteroids)
+        if (asteroidCount > maxAsteroids)
         {
             return;
         }
         while (GameManager.gameTime > nextSpawnTime)
         {
-            Asteroids.Add(MakeAsteroid());
+            MakeAsteroid();
+            asteroidCount++;
             nextSpawnTime += timeToSpawnAsteroids;
         }
         

@@ -20,6 +20,8 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] private float maxSpinPerSecond;
     [SerializeField] private float minSpinPerSecond;
     [SerializeField] private float angleRandomness;
+    [SerializeField] private AudioClip asteroidDestroyed;
+    [SerializeField] private AudioSource source;
     void Start()
     {
         timeToSpawnAsteroids = 3/(float)difficulty;
@@ -65,6 +67,9 @@ public class AsteroidManager : MonoBehaviour
             asteroidCount++;
             nextSpawnTime += timeToSpawnAsteroids;
         }
-        
+    }
+    public void PlayAsteroidDestoryed()
+    {
+        source.PlayOneShot(asteroidDestroyed);
     }
 }

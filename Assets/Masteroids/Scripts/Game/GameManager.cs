@@ -178,18 +178,10 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKey(KeyCode.Return))
 #else
-        if (Input.GetButton("P1 Start") && Input.GetButton("P2 Start"))
+        if (Input.GetButton("P2 Start"))
 #endif
         {
-            UIWaitTime += Time.deltaTime;
-            if (UIWaitTime > 2)
-            {
-                QuitGame();
-            }
-        }
-        else
-        {
-            UIWaitTime = 0;
+            QuitGame();
         }
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Return))

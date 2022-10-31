@@ -21,21 +21,17 @@ public class PlayerShoot : MonoBehaviour
     {
         if (GameManager.currentGameState == GameManager.GameState.Game)
         {
-            if ((Input.GetButton("Jump") || /*Input.GetKey(KeyCode.Mouse0)*/Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) && (GameManager.gameTime > (timeBetweenShots + timeSinceLastShot)))
+#if UNITY_EDITOR
+            if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)) && (GameManager.gameTime > (timeBetweenShots + timeSinceLastShot)))
+#else
+            if ((Input.GetAxisRaw("P2 Hori") != 0  || Input.GetAxisRaw("P2 Verti") != 0) && (GameManager.gameTime > (timeBetweenShots + timeSinceLastShot)))
+#endif
             {
                 SpawnBullet();
                 timeSinceLastShot = GameManager.gameTime;
             }
         }
     }
-    /*public void SpawnBullet()
-    {
-        GameObject newBulletObject = Instantiate(bulletPrefab, GameManager.player.transform.position, Quaternion.identity, transform);
-        Bullet newBullet = newBulletObject.AddComponent<Bullet>();
-        newBullet.angle = Input.GetAxisRaw("Horizontal");
-        newBullet.bulletSpeed = bulletSpeed;
-        Bullets.Add(newBullet);
-    }*/
     public Bullet SpawnBullet()
     {
         GameObject newBulletObject = Instantiate(bulletPrefab, GameManager.player.transform.position, Quaternion.identity, transform);

@@ -10,23 +10,23 @@ using System.Text;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private AsteroidManager asteroidManager;
-    [SerializeField] private Text scoreText;
-    [SerializeField] private Text highScoreHUDText;
-    [SerializeField] private Gradient highScoreTextGradient;
-    [SerializeField] private float highScoreTextGradientValue;
-    [SerializeField] private GameObject PauseCanvas;
+    public AsteroidManager asteroidManager;
+    public Text scoreText;
+    public Text highScoreHUDText;
+    public Gradient highScoreTextGradient;
+    public float highScoreTextGradientValue;
+    public GameObject PauseCanvas;
     public int instanceHighScoreMax;
-    [SerializeField] private float timeScoreWorth;
+    public float timeScoreWorth;
     public static float score;
     public static float gameTime;
-    [SerializeField] private GameObject playerprefab;
-    [SerializeField] public static PlayerMovement player;
+    public GameObject playerprefab;
+    public static PlayerMovement player;
     public static GameState currentGameState;
     public List<HighScore> HighScoreList = new List<HighScore>();
-    [SerializeField] private Text highScoreScoreText;
-    [SerializeField] private Text highScoreNameText;
-    [SerializeField] private GameObject NewScoreObject;
+    public Text highScoreScoreText;
+    public Text highScoreNameText;
+    public GameObject NewScoreObject;
     private float UIWaitTime = 0;
     [System.Serializable]
     public struct HighScore
@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
     }
     void Start()
     {
+        Cursor.visible = false;
         if (playerprefab == null)
         {
             Debug.LogWarning("Player Prefab not assigned!");
@@ -71,10 +72,6 @@ public class GameManager : MonoBehaviour
         PauseMenu();
         if (currentGameState == GameState.Game)
         {
-            if (true)
-            {
-
-            }
             gameTime += Time.deltaTime;
             if (gameTime > 12)
             {
@@ -186,7 +183,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Return))
 #else
-        if (Input.GetButtonDown("P1 Start") || Input.GetButtonDown("P2 Start"))
+        if (Input.GetButtonDown("P1 Start"))
 #endif
         {
             switch (currentGameState)

@@ -2,25 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 
 public class TestScript
 {
+    private GameManager gameManager;
+    private PlayerMovement playerMovement;
+    private PlayerShoot playerShoot;
+    private AsteroidManager asteroidManager;
 #if UNITY_EDITOR
     // A Test behaves as an ordinary method
-    [Test]
-    public void TestScriptSimplePasses()
+    [SetUp]
+    public void SetUp()
     {
-        
-        Assert.IsTrue(true);
-        // Use the Assert class to test conditions
+        gameManager = new GameObject().AddComponent<GameManager>();
+        gameManager.playerprefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Masteroids/Prefabs/Player Prefab.prefab", typeof(GameObject));
+        playerShoot = new GameObject().AddComponent<PlayerShoot>();
+        asteroidManager = new GameObject().AddComponent<AsteroidManager>();
+        gameManager.scoreText = new GameObject().AddComponent<UnityEngine.UI.Text>();
+        gameManager.highScoreHUDText = new GameObject().AddComponent<UnityEngine.UI.Text>();
+        asteroidManager.asteroidPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Masteroids/Prefabs/Asteroid.prefab", typeof(GameObject));
+        playerShoot.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Masteroids/Prefabs/Bullet.prefab", typeof(GameObject));
+        asteroidManager.source = asteroidManager.gameObject.AddComponent<AudioSource>();
+    }
+    [TearDown]
+    public void TearDown()
+    {
+        Object.Destroy(gameManager.highScoreHUDText.gameObject);
+        Object.Destroy(gameManager.scoreText.gameObject);
+        Object.Destroy(gameManager.gameObject);
+        Object.Destroy(GameManager.player.gameObject);
+        Object.Destroy(playerShoot.gameObject);
+        Object.Destroy(asteroidManager.gameObject);
     }
     [Test]
     public void SaveAndLoadHighScores()
     {
-        GameObject gameObject = new GameObject();
-        GameManager gameManager = gameObject.AddComponent<GameManager>();
         gameManager.instanceHighScoreMax = 10;
         gameManager.LoadScores();
         List<GameManager.HighScore> actualScores = new List<GameManager.HighScore>();
@@ -46,15 +65,11 @@ public class TestScript
         gameManager.LoadScores();
         gameManager.HighScoreList = actualScores;
         gameManager.SaveScores();
-        GameObject.Destroy(gameObject);
         Assert.IsTrue(works);
     }
     [UnityTest]
     public IEnumerator MoveRandomDirection()
     {
-        //GameObject gameObject = new GameObject();
-        //GameManager gameManager = gameObject.AddComponent<GameManager>();
-        SceneManager.LoadScene(0);
         yield return null;
         Vector3 currentPosition = new Vector3();
         currentPosition = GameManager.player.transform.position;
@@ -65,31 +80,23 @@ public class TestScript
     [UnityTest]
     public IEnumerator ShootBullet()
     {
-        SceneManager.LoadScene(0);
         yield return null;
-        PlayerShoot bulletHandler = GameObject.Find("Bullets").GetComponent<PlayerShoot>();
         int oldBulletCount = new int();
-        oldBulletCount = bulletHandler.transform.childCount;
-        bulletHandler.SpawnBullet();
-        Assert.IsTrue(oldBulletCount+1 == bulletHandler.transform.childCount);
+        oldBulletCount = playerShoot.transform.childCount;
+        playerShoot.SpawnBullet();
+        Assert.IsTrue(oldBulletCount+1 == playerShoot.transform.childCount);
     }
     [UnityTest]
     public IEnumerator BulletHitsEnemy()
     {
-        SceneManager.LoadScene(0);
         yield return null;
-        PlayerShoot bulletHandler = GameObject.Find("Bullets").GetComponent<PlayerShoot>();
-        Bullet bullet = bulletHandler.SpawnBullet();
-        AsteroidManager asteroidHandler = GameObject.Find("Asteroids").GetComponent<AsteroidManager>();
-        Asteroid asteroid = asteroidHandler.MakeAsteroid();
+        Bullet bullet = playerShoot.SpawnBullet();
+        Asteroid asteroid = asteroidManager.MakeAsteroid();
         asteroid.transform.position = new Vector3(5, 5, 0);
         bullet.transform.position = new Vector3(5, 5, 0);
-        float oldScore = new float();
-        int oldAsteroidCount = new int();
-        int oldBulletCount = new int();
-        oldScore = GameManager.score;
-        oldAsteroidCount = asteroidHandler.transform.childCount;
-        oldBulletCount = bulletHandler.transform.childCount;
+        float oldScore = GameManager.score;
+        int oldAsteroidCount = asteroidManager.transform.childCount;
+        int oldBulletCount = playerShoot.transform.childCount;
         yield return new WaitForFixedUpdate();
         //yield return new WaitForFixedUpdate();
         yield return null;
@@ -106,11 +113,11 @@ public class TestScript
         {
             works = false;
         }
-        if (oldAsteroidCount == asteroidHandler.transform.childCount)
+        if (oldAsteroidCount == asteroidManager.transform.childCount)
         {
             works = false;
         }
-        if (oldBulletCount == bulletHandler.transform.childCount)
+        if (oldBulletCount == playerShoot.transform.childCount)
         {
             works = false;
         }
@@ -119,10 +126,8 @@ public class TestScript
     [UnityTest]
     public IEnumerator BulletHitsPlayer()
     {
-        SceneManager.LoadScene(0);
         yield return null;
-        AsteroidManager asteroidHandler = GameObject.Find("Asteroids").GetComponent<AsteroidManager>();
-        Asteroid asteroid = asteroidHandler.MakeAsteroid();
+        Asteroid asteroid = asteroidManager.MakeAsteroid();
         asteroid.transform.position = new Vector3(0, 0, 0);
         int frameNumber = 0;
         bool works = true;
@@ -146,10 +151,8 @@ public class TestScript
     [UnityTest]
     public IEnumerator RestatsGame()
     {
-        SceneManager.LoadScene(0);
         yield return null;
-        AsteroidManager asteroidHandler = GameObject.Find("Asteroids").GetComponent<AsteroidManager>();
-        Asteroid asteroid = asteroidHandler.MakeAsteroid();
+        Asteroid asteroid = asteroidManager.MakeAsteroid();
         asteroid.transform.position = new Vector3(0, 0, 0);
         int frameNumber = 0;
         bool works = true;
@@ -169,17 +172,6 @@ public class TestScript
             }
         }
         Assert.IsTrue(works);
-    }
-
-    // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-    // `yield return null;` to skip a frame.
-    [UnityTest]
-    public IEnumerator TestScriptWithEnumeratorPasses()
-    {
-        // Use the Assert class to test conditions.
-        // Use yield to skip a frame.
-        yield return null;
-        Assert.IsTrue(true);
     }
 #endif
 }

@@ -7,7 +7,7 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] private int maxAsteroids;
     public int asteroidCount = 0;
     //[SerializeField] public List<Asteroid> Asteroids;
-    [SerializeField] private GameObject asteroidPrefab;
+    public GameObject asteroidPrefab;
     [Range(0.02f,5)]
     [SerializeField] private float timeToSpawnAsteroids;
     [Range(0, 20)]
@@ -20,8 +20,8 @@ public class AsteroidManager : MonoBehaviour
     [SerializeField] private float maxSpinPerSecond;
     [SerializeField] private float minSpinPerSecond;
     [SerializeField] private float angleRandomness;
-    [SerializeField] private AudioClip asteroidDestroyed;
-    [SerializeField] private AudioSource source;
+    public AudioClip asteroidDestroyed;
+    public AudioSource source;
     void Start()
     {
         timeToSpawnAsteroids = 3/(float)difficulty;

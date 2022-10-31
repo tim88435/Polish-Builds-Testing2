@@ -1,5 +1,5 @@
-You are a red rombus trying to get through an ocean of asteroids.
+You are a red rhombus trying to get through an ocean of asteroids.
 You can fire bullets, but the game will become harder and harder!
 The main purpose of this was to see how to port to the arcade (for future reference), but you can still try get the top score!
 
-By playing this game, you hereby sumbit your body and soul to become the top-scoring player on the ever-changing scoreboard.
+By playing this game, you hereby submit your body and soul to become the top-scoring player on the ever-changing scoreboard.

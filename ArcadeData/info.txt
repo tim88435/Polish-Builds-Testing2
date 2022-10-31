@@ -1,5 +1,5 @@
 FullName="MASTEROIDS"
-DeveloperNames="TIMOFEY KONDYURIN"
+DeveloperNames="Timofey Kondyurin"
 DevType="Diploma" // Cert4 Diploma AdvancedDiploma Teacher Alumni //
 Year="2022"
 Players="1"

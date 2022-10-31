@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private float timeSinceLastShot;
-    public List<Bullet> Bullets;
+    public List<Bullet> Bullets = new List<Bullet>();
     public GameObject bulletPrefab;
     [Range(0.005f, Mathf.Infinity)]
     [SerializeField] private float timeBetweenShots;

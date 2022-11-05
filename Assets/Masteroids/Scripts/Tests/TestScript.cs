@@ -75,7 +75,7 @@ public class TestScript
         currentPosition = GameManager.player.transform.position;
         Vector3 direction = new Vector3(Random.Range(1f, 0f), Random.Range(1f, 0f), 0f);
         GameManager.player.MovePlayer(direction);
-        Assert.IsTrue(GameManager.player.transform.position == currentPosition + direction.normalized * Time.deltaTime * GameManager.player.speed);
+        Assert.AreEqual(currentPosition + direction.normalized * Time.deltaTime * GameManager.player.speed, GameManager.player.transform.position);
     }
     [UnityTest]
     public IEnumerator ShootBullet()
@@ -84,7 +84,7 @@ public class TestScript
         int oldBulletCount = new int();
         oldBulletCount = playerShoot.transform.childCount;
         playerShoot.SpawnBullet();
-        Assert.IsTrue(oldBulletCount+1 == playerShoot.transform.childCount);
+        Assert.AreEqual(oldBulletCount+1, playerShoot.transform.childCount);
     }
     [UnityTest]
     public IEnumerator BulletHitsEnemy()
@@ -171,7 +171,7 @@ public class TestScript
                 break;
             }
         }
-        Assert.IsTrue(works);
+        Assert.IsFalse(!works);
     }
 #endif
 }

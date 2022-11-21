@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
     public Text highScoreScoreText;
     public Text highScoreNameText;
     public GameObject NewScoreObject;
-    private float UIWaitTime = 0;
     [System.Serializable]
     public struct HighScore
     {
@@ -58,7 +57,7 @@ public class GameManager : MonoBehaviour
         {
             player = Instantiate(playerprefab).GetComponent<PlayerMovement>();
         }
-        if (File.Exists("HighScores.txt"))
+        if (File.Exists($"{Application.dataPath}/HighScores.txt"))
         {
             LoadScores();
         }
@@ -162,29 +161,21 @@ public class GameManager : MonoBehaviour
     }
     public void LoadScores()
     {
-        HighScoreList = JsonUtility.FromJson<ScoreSave>(Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText("HighScores.txt")))).SavedScoreList;
+        HighScoreList = JsonUtility.FromJson<ScoreSave>(Encoding.UTF8.GetString(Convert.FromBase64String(File.ReadAllText($"{Application.dataPath}/HighScores.txt")))).SavedScoreList;
     }
     public void SaveScores()
     {
         ScoreSave scoreSave = new ScoreSave();
         scoreSave.SavedScoreList = HighScoreList;
-        File.WriteAllText("HighScores.txt", Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonUtility.ToJson(scoreSave))));
+        File.WriteAllText($"{Application.dataPath}/HighScores.txt", Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonUtility.ToJson(scoreSave))));
     }
     void PauseMenu()
     {
-#if UNITY_EDITOR
-        if (Input.GetKey(KeyCode.Return))
-#else
-        if (Input.GetButton("P2 Start"))
-#endif
+        if (Input.GetKey(KeyCode.Escape) || Input.GetButton("P2 Start"))
         {
             QuitGame();
         }
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Return))
-#else
-        if (Input.GetButtonDown("P1 Start"))
-#endif
+        if (Input.GetButtonDown("P1 Start") || Input.GetKeyDown(KeyCode.Return))
         {
             switch (currentGameState)
             {

@@ -43,7 +43,6 @@ public class Asteroid : MonoBehaviour
     {
         //manager.Asteroids.Remove(this);
         Destroy(gameObject);
-        manager.GetComponent<AsteroidManager>().PlayAsteroidDestoryed();
     }
     private void OnDestroy()
     {

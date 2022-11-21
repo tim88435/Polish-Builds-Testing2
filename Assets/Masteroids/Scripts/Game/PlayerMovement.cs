@@ -12,34 +12,18 @@ public class PlayerMovement : MonoBehaviour
     {
         playerCollider = GetComponent<Collider2D>();
     }
-
     // Update is called once per frame
     void Update()
     {
         if (GameManager.currentGameState == GameManager.GameState.Game)
         {
-#if UNITY_EDITOR
-            //MovePlayer(new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0));
-            MovePlayer(new Vector3(Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0, Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0, 0));
-#else
             MovePlayer(new Vector3(Input.GetAxisRaw("P1 Hori"), Input.GetAxisRaw("P1 Verti"), 0));
-#endif
         }
         if (CheckForCollision())
         {
             GameManager.currentGameState = GameManager.GameState.EndGame;
         }
         CheckifOutOfBounds();
-    }
-    private void MovePlayer()
-    {
-#if UNITY_EDITOR
-        //Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), 0);
-        Vector3 direction = new Vector3(Input.GetKey(KeyCode.W) ? 1 : Input.GetKey(KeyCode.S) ? -1 : 0, Input.GetKey(KeyCode.D) ? 1 : Input.GetKey(KeyCode.A) ? -1 : 0, 0);
-#else
-        Vector3 direction = new Vector3(Input.GetAxisRaw("P1 Hori"), Input.GetAxisRaw("P1 Verti"), 0);
-#endif
-        transform.Translate(direction.normalized * Time.deltaTime * speed);
     }
     public void MovePlayer(Vector3 direction)
     {

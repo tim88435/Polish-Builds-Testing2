@@ -272,7 +272,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ' V 1.1'
+  m_Text: ' V 1.2'
 --- !u!222 &165126422
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6281,6 +6281,7 @@ MonoBehaviour:
   Bullets: []
   bulletPrefab: {fileID: 4456801224479179352, guid: 244281b3bb13d1e4ba3c4d2d69d98e2e, type: 3}
   timeBetweenShots: 0.2
+  asteroidManager: {fileID: 1598032184}
   bulletSpeed: 5
 --- !u!1 &1265794559
 GameObject:

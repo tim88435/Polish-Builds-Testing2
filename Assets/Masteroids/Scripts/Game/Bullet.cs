@@ -55,6 +55,7 @@ public class Bullet : MonoBehaviour
                 if (collidedObjects[i].TryGetComponent(out Asteroid asteroid))
                 {
                     asteroid.DeleteAsteroid();
+                    manager.asteroidManager.PlayAsteroidDestoryed();
                     GameManager.score+= 10;
                     DeleteBullet();
                 }

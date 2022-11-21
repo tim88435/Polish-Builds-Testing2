@@ -9,6 +9,7 @@ public class PlayerShoot : MonoBehaviour
     public GameObject bulletPrefab;
     [Range(0.005f, Mathf.Infinity)]
     [SerializeField] private float timeBetweenShots;
+    public AsteroidManager asteroidManager;
     [SerializeField] private float bulletSpeed;
     // Start is called before the first frame update
     void Start()

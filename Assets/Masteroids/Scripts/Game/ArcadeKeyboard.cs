@@ -33,11 +33,7 @@ public class ArcadeKeyboard : MonoBehaviour
     {
         get
         {
-#if UNITY_EDITOR
-            return new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-#else
             return new Vector2(Input.GetAxisRaw("P1 Hori"), Input.GetAxisRaw("P1 Verti"));
-#endif
         }
     }
     private Vector2 JoyStickInputs { get; set; }
@@ -52,11 +48,7 @@ public class ArcadeKeyboard : MonoBehaviour
         selectedCharacter = (int)Mathf.Clamp(selectedCharacter + JoyStickInputs.x, 0, newName.Length - 2);
         newName[selectedCharacter] = ChangeLetter((int)JoyStickInputs.y);
         inputField.text = InputText;
-#if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.Return))
-#else
-        if (Input.GetButtonDown("P1 Start") || Input.GetButtonDown("P2 Start"))
-#endif
+        if (Input.GetButtonDown("P1 Start") || Input.GetKeyDown(KeyCode.Return))
         {
             if (TryName(out string newName))
             {

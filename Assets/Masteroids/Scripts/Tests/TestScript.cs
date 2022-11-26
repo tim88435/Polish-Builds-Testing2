@@ -21,10 +21,12 @@ public class TestScript
         gameManager.playerprefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Masteroids/Prefabs/Player Prefab.prefab", typeof(GameObject));
         playerShoot = new GameObject().AddComponent<PlayerShoot>();
         asteroidManager = new GameObject().AddComponent<AsteroidManager>();
+        gameManager.highScoreTextGradient = new Gradient();
         gameManager.scoreText = new GameObject().AddComponent<UnityEngine.UI.Text>();
         gameManager.highScoreHUDText = new GameObject().AddComponent<UnityEngine.UI.Text>();
         asteroidManager.asteroidPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Masteroids/Prefabs/Asteroid.prefab", typeof(GameObject));
         playerShoot.bulletPrefab = (GameObject)AssetDatabase.LoadAssetAtPath("Assets/Masteroids/Prefabs/Bullet.prefab", typeof(GameObject));
+        playerShoot.asteroidManager = asteroidManager;
         asteroidManager.source = asteroidManager.gameObject.AddComponent<AudioSource>();
     }
     [TearDown]
@@ -33,7 +35,10 @@ public class TestScript
         Object.Destroy(gameManager.highScoreHUDText.gameObject);
         Object.Destroy(gameManager.scoreText.gameObject);
         Object.Destroy(gameManager.gameObject);
-        Object.Destroy(GameManager.player.gameObject);
+        if (GameManager.player != null)
+        {
+            Object.Destroy(GameManager.player.gameObject);
+        }
         Object.Destroy(playerShoot.gameObject);
         Object.Destroy(asteroidManager.gameObject);
     }
@@ -41,11 +46,14 @@ public class TestScript
     public void SaveAndLoadHighScores()
     {
         gameManager.instanceHighScoreMax = 10;
-        gameManager.LoadScores();
         List<GameManager.HighScore> actualScores = new List<GameManager.HighScore>();
-        for (int i = 0; i < gameManager.HighScoreList.Count; i++)
+        if (System.IO.File.Exists($"{Application.dataPath}/HighScores.txt"))
         {
-            actualScores.Add(gameManager.HighScoreList[i]);
+            gameManager.LoadScores();
+            for (int i = 0; i < gameManager.HighScoreList.Count; i++)
+            {
+                actualScores.Add(gameManager.HighScoreList[i]);
+            }
         }
         List<GameManager.HighScore> testScores = new List<GameManager.HighScore>();
         gameManager.ClearHighScores();
@@ -62,9 +70,12 @@ public class TestScript
                 works = false;
             }
         }
-        gameManager.LoadScores();
-        gameManager.HighScoreList = actualScores;
-        gameManager.SaveScores();
+        if (actualScores.Count <= 0)
+        {
+            gameManager.LoadScores();
+            gameManager.HighScoreList = actualScores;
+            gameManager.SaveScores();
+        }
         Assert.IsTrue(works);
     }
     [UnityTest]
